@@ -3,7 +3,7 @@ import XCTest
 
 final class Base64Tests: XCTestCase {
     // See https://tools.ietf.org/html/rfc4648#section-10
-    func testRFCTestVectorsAndSpecialURLSafeCases() {
+    func testRFCTestVectorsAndSpecialURLSafeCases() throws {
         let vectors = [
             "": "",
             "f": "Zg",
@@ -16,7 +16,7 @@ final class Base64Tests: XCTestCase {
             "⦿": "4qa_"
         ]
 
-        vectors.forEach { (expectedString, expectedEncodedString) in
+        try vectors.forEach { (expectedString, expectedEncodedString) throws in
             let expectedEncodedData = Data(expectedEncodedString.utf8)
             let expectedData = Data(expectedString.utf8)
 
@@ -24,15 +24,9 @@ final class Base64Tests: XCTestCase {
             let encodedData = expectedData.base64URLEncodedData()
 
 
-            guard let decodedDataFromString = Data(base64URLEncoded: expectedEncodedString) else {
-                XCTFail("Could not decode \(expectedEncodedString)")
-                return
-            }
+            let decodedDataFromString = try XCTUnwrap(Data(base64URLEncoded: expectedEncodedString))
 
-            guard let decodedDataFromData = Data(base64URLEncoded: expectedEncodedData) else {
-                XCTFail("Could not decode \(String(describing: expectedEncodedString))")
-                return
-            }
+            let decodedDataFromData = try XCTUnwrap(Data(base64URLEncoded: expectedEncodedData))
 
             XCTAssertEqual(encodedString, expectedEncodedString)
             XCTAssertEqual(decodedDataFromString, expectedData)
