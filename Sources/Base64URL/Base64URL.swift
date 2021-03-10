@@ -37,7 +37,7 @@ public extension Data {
 
     func base64URLEncodedData(options: Data.Base64EncodingOptions = []) -> Data {
         var data = base64EncodedData(options: options)
-        var indexesToRemove: [Int] = []
+        var padding = 0
 
         // NOTE: we replace chars in the mutable Data
         for (index, char) in data.enumerated() {
@@ -46,16 +46,11 @@ public extension Data {
             } else if char == slashChar {
                 data[index] = underscoreChar
             } else if char == equalsChar {
-                // NOTE: we accumulate ='s for later
-                indexesToRemove.append(index)
+                padding += 1
             }
         }
 
-        // NOTE: When we remove an =, the Int of all following indexes should be shifted by one
-        // It turns out the index position in the indexesToRemove array is the amount each data index should be shifted to the left (the index of indexesToRemove is called count below)
-        for (count, index) in indexesToRemove.enumerated() {
-            data.remove(at: index - count)
-        }
+        data.removeLast(padding)
 
         return data
     }
