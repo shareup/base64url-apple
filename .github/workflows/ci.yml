@@ -3,6 +3,20 @@ name: Build and Test
 on: push
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: lint
+      run: |
+        cd /tmp
+        curl -OLs "https://github.com/nicklockwood/SwiftFormat/releases/download/0.47.12/swiftformat.zip"
+        unzip swiftformat.zip
+        cd $GITHUB_WORKSPACE
+        /tmp/swiftformat . --lint
+
   build:
     name: Build and Test
     runs-on: macos-latest

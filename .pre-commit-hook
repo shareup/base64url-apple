@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+files=$(git diff --cached --name-only | awk '/\.swift$/ { print }' | xargs)
+
+if [[ -n "$files" ]]; then
+  swiftformat $files
+  git add $files
+fi
+

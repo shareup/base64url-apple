@@ -7,15 +7,18 @@ let package = Package(
     products: [
         .library(
             name: "Base64URL",
-            targets: ["Base64URL"]),
+            targets: ["Base64URL"]
+        ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Base64URL",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "Base64URLTests",
-            dependencies: ["Base64URL"]),
+            dependencies: ["Base64URL"]
+        ),
     ]
 )

@@ -29,8 +29,8 @@ public extension Data {
 
         let convertedString =
             string.replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-            .appending(padding)
+                .replacingOccurrences(of: "_", with: "/")
+                .appending(padding)
 
         self.init(base64Encoded: convertedString, options: options)
     }
@@ -56,9 +56,9 @@ public extension Data {
     }
 
     func base64URLEncodedString(options: Data.Base64EncodingOptions = []) -> String {
-        return base64EncodedString(options: options)
-                .replacingOccurrences(of: "+", with: "-")
-                .replacingOccurrences(of: "/", with: "_")
-                .trimmingCharacters(in: CharacterSet(charactersIn: "="))
+        base64EncodedString(options: options)
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .trimmingCharacters(in: CharacterSet(charactersIn: "="))
     }
 }
