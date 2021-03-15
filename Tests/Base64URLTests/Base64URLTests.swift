@@ -1,5 +1,5 @@
-import XCTest
 @testable import Base64URL
+import XCTest
 
 final class Base64Tests: XCTestCase {
     // See https://tools.ietf.org/html/rfc4648#section-10
@@ -13,7 +13,7 @@ final class Base64Tests: XCTestCase {
             "fooba": "Zm9vYmE",
             "foobar": "Zm9vYmFy",
             "😟": "8J-Ynw",
-            "⦿": "4qa_"
+            "⦿": "4qa_",
         ]
 
         try vectors.forEach { (expectedString, expectedEncodedString) throws in
@@ -22,7 +22,6 @@ final class Base64Tests: XCTestCase {
 
             let encodedString = expectedData.base64URLEncodedString()
             let encodedData = expectedData.base64URLEncodedData()
-
 
             let decodedDataFromString = try XCTUnwrap(Data(base64URLEncoded: expectedEncodedString))
 

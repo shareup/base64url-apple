@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+files=$(git diff --cached --name-only | grep -i "./*\.swift$" | xargs)
+files="${files:-.}"
+
+swiftformat $files
