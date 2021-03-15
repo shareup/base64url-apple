@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
       cd /tmp
-      curl -OLs https://github.com/nicklockwood/SwiftFormat/releases/download/0.47.12/swiftformat.zip
+      curl -OLs "https://github.com/nicklockwood/SwiftFormat/releases/download/0.47.12/swiftformat.zip"
       unzip swiftformat.zip
       cd $GITHUB_WORKSPACE
       /tmp/swiftformat . --lint
