@@ -33,4 +33,18 @@ final class Base64Tests: XCTestCase {
             XCTAssertEqual(encodedData, expectedEncodedData)
         }
     }
+
+    func testWithUUIDBytes() throws {
+        let uuid = try XCTUnwrap(UUID(uuidString: "67f266af-a882-4949-b7f6-52e1f3edc08d"))
+        let u = uuid.uuid
+        let data = Data([
+            u.0, u.1, u.2, u.3,
+            u.4, u.5, u.6, u.7,
+            u.8, u.9, u.10, u.11,
+            u.12, u.13, u.14, u.15
+        ])
+
+        XCTAssertEqual("Z/Jmr6iCSUm39lLh8+3AjQ==", data.base64EncodedString())
+        XCTAssertEqual("Z_Jmr6iCSUm39lLh8-3AjQ", data.base64URLEncodedString())
+    }
 }
