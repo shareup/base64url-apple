@@ -2,7 +2,8 @@
 
 set -eo pipefail
 
-files=$(git diff --cached --name-only | grep -i "./*\.swift$" | xargs)
-files="${files:-.}"
+files=$(git diff --cached --name-only | awk '/\.swift$/ { print }' | xargs)
 
-swiftformat $files
+if [[ -n "$files" ]]; then
+  swiftformat $files
+fi
