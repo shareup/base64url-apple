@@ -25,3 +25,17 @@ let package = Package(
    ]
 )
 ```
+
+## Dev setup
+
+Please make sure `swiftformat` is installed:
+
+```sh
+$ brew install swiftformat
+```
+
+Please install the `git` `pre-commit` hook:
+
+```sh
+$ cp .pre-commit-hook .git/hooks/pre-commit
+```
