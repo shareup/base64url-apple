@@ -9,6 +9,11 @@ let package = Package(
             name: "Base64URL",
             targets: ["Base64URL"]
         ),
+        .library(
+            name: "Base64URLDynamic",
+            type: .dynamic,
+            targets: ["Base64URL"]
+        ),
     ],
     dependencies: [],
     targets: [
