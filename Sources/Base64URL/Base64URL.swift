@@ -1,10 +1,11 @@
 import Foundation
 
-let plusChar = Character("+").asciiValue!
-let slashChar = Character("/").asciiValue!
-let hyphenChar = Character("-").asciiValue!
-let underscoreChar = Character("_").asciiValue!
-let equalsChar = Character("=").asciiValue!
+private let plusAscii = Character("+").asciiValue!
+private let slashAscii = Character("/").asciiValue!
+private let hyphenAscii = Character("-").asciiValue!
+private let underscoreAscii = Character("_").asciiValue!
+private let equalsAscii = Character("=").asciiValue!
+private let equalsCharSet = CharacterSet(charactersIn: "=")
 
 public extension Data {
     init?(base64URLEncoded data: Data, options: Data.Base64DecodingOptions = []) {
@@ -12,14 +13,14 @@ public extension Data {
 
         // NOTE: we replace chars in the mutable Data
         for (index, char) in mutableData.enumerated() {
-            if char == hyphenChar {
-                mutableData[index] = plusChar
-            } else if char == underscoreChar {
-                mutableData[index] = slashChar
+            if char == hyphenAscii {
+                mutableData[index] = plusAscii
+            } else if char == underscoreAscii {
+                mutableData[index] = slashAscii
             }
         }
 
-        mutableData.append(Data(repeating: equalsChar, count: data.count % 4))
+        mutableData.append(Data(repeating: equalsAscii, count: data.count % 4))
 
         self.init(base64Encoded: mutableData, options: options)
     }
@@ -41,11 +42,11 @@ public extension Data {
 
         // NOTE: we replace chars in the mutable Data
         for (index, char) in data.enumerated() {
-            if char == plusChar {
-                data[index] = hyphenChar
-            } else if char == slashChar {
-                data[index] = underscoreChar
-            } else if char == equalsChar {
+            if char == plusAscii {
+                data[index] = hyphenAscii
+            } else if char == slashAscii {
+                data[index] = underscoreAscii
+            } else if char == equalsAscii {
                 padding += 1
             }
         }
@@ -57,8 +58,8 @@ public extension Data {
 
     func base64URLEncodedString(options: Data.Base64EncodingOptions = []) -> String {
         base64EncodedString(options: options)
-            .replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .trimmingCharacters(in: CharacterSet(charactersIn: "="))
+            .replacingOccurrences(of: "+", with: "-", options: .literal)
+            .replacingOccurrences(of: "/", with: "_", options: .literal)
+            .trimmingCharacters(in: equalsCharSet)
     }
 }
